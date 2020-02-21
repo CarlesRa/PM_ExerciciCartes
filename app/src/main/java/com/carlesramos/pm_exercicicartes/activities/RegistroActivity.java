@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.carlesramos.pm_exercicicartes.R;
 import com.carlesramos.pm_exercicicartes.apiclient.APIUtils;
+import com.carlesramos.pm_exercicicartes.configurations.Configurations;
 import com.carlesramos.pm_exercicicartes.interfaces.IApiInterface;
 import com.carlesramos.pm_exercicicartes.model.Jugadores;
 import com.google.gson.Gson;
@@ -38,6 +39,11 @@ public class RegistroActivity extends AppCompatActivity {
         etEmailRegistro = findViewById(R.id.etEmailRegistre);
         btSingIn = findViewById(R.id.btSignIn);
 
+        String nickName = getIntent().getStringExtra(Configurations.EXTRA_NICKNAME);
+        String passwd = getIntent().getStringExtra(Configurations.EXTRA_PASSWORD);
+        etNickNameRegistro.setText(nickName);
+        etPasswordRegistro.setText(passwd);
+
         btSingIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +69,9 @@ public class RegistroActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Jugadores> call, Response<Jugadores> response) {
                 if (response.isSuccessful()){
-                    Toast.makeText(RegistroActivity.this, getText(R.string.registry_ok), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistroActivity.this,
+                            getText(R.string.registry_ok), Toast.LENGTH_SHORT).show();
+                    finish();
                 }
                 else Toast.makeText(RegistroActivity.this, "una gena", Toast.LENGTH_SHORT).show();
             }

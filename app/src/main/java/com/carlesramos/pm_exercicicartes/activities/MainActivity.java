@@ -10,11 +10,15 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.carlesramos.pm_exercicicartes.R;
+import com.carlesramos.pm_exercicicartes.configurations.Configurations;
+import com.carlesramos.pm_exercicicartes.fragments.GameScreenFragment;
 import com.carlesramos.pm_exercicicartes.fragments.WelcomeGameScreenFragment;
 import com.carlesramos.pm_exercicicartes.interfaces.IButtonSelected;
 
 public class MainActivity extends AppCompatActivity implements IButtonSelected {
 
+    private String idSession;
+    private int idCliente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements IButtonSelected {
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.contenedor, welcomeGameScreenFragment)
         .commit();
+        idSession = getIntent().getStringExtra(Configurations.EXTRA_IDSESSION);
+        idCliente = getIntent().getIntExtra(Configurations.EXTRA_IDCLIENTE,0);
     }
 
     @Override
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements IButtonSelected {
             }
             case R.id.btPlayGame : {
                 Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show();
+                GameScreenFragment gameScreenFragment = new GameScreenFragment(idSession, idCliente);
                 break;
             }
             case R.id.btExit : {

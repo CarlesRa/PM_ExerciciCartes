@@ -1,6 +1,5 @@
 package com.carlesramos.pm_exercicicartes.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,7 @@ public class WelcomeGameScreenFragment extends Fragment implements View.OnClickL
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.game_screen_fragment, container, false);
+        return inflater.inflate(R.layout.welcome_game_screen_fragment, container, false);
     }
 
     @Override

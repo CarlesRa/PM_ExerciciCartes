@@ -2,7 +2,6 @@ package com.carlesramos.pm_exercicicartes.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +14,11 @@ import android.widget.Toast;
 
 import com.carlesramos.pm_exercicicartes.R;
 import com.carlesramos.pm_exercicicartes.apiclient.APIUtils;
+import com.carlesramos.pm_exercicicartes.clasesaux.ValidarLogin;
 import com.carlesramos.pm_exercicicartes.configurations.Configurations;
 import com.carlesramos.pm_exercicicartes.interfaces.IApiInterface;
+import com.google.gson.Gson;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,44 +51,67 @@ public class LoginActivity extends AppCompatActivity{
                         getText(R.string.not_null), Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
-    
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     public void getResultadoLogin(){
+
 
         mApiInterface.validarLogin(etNombre.getText().toString(),
                 etPasswd.getText().toString()).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-
+                Gson g = new Gson();
                 //TODO cambiar els colors dels botons del dialog
-                if (response.body().equals(Configurations.LOGIN_FAIL)){
-                    Toast.makeText(LoginActivity.this, response.body(), Toast.LENGTH_SHORT).show();
-                    AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
-                    alertDialog.setTitle("Login Fail!");
-                    alertDialog.setMessage(getText(R.string.passwordfail));
-                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getText(R.string.no),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    etPasswd.setText("");
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getText(R.string.yes), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent i = new Intent(LoginActivity.this, RegistroActivity.class);
-                            startActivity(i);
-                        }
-                    });
+                if (response.isSuccessful()){
+                    if (response.body().equals(Configurations.LOGIN_FAIL)){
+                        Toast.makeText(LoginActivity.this, response.body(),
+                                Toast.LENGTH_SHORT).show();
+                        AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this)
+                                .create();
+                        alertDialog.setTitle("Login Fail!");
+                        alertDialog.setMessage(getText(R.string.passwordfail));
+                        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getText(R.string.no),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        etPasswd.setText("");
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getText(R.string.yes),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent i = new Intent(LoginActivity.this,
+                                                RegistroActivity.class);
+                                        i.putExtra(Configurations.EXTRA_NICKNAME,etNombre.getText().toString());
+                                        i.putExtra(Configurations.EXTRA_PASSWORD,etPasswd.getText().toString());
+                                        startActivity(i);
+                                    }
+                                });
 
-                    alertDialog.show();
+                        alertDialog.show();
+                    }
+                    else {
+                        String [] datos = response.body().split(" ");
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                        i.putExtra(Configurations.EXTRA_IDSESSION, datos[0]);
+                        i.putExtra(Configurations.EXTRA_IDCLIENTE, datos[1]);
+                        startActivity(i);
+                    }
                 }
-                else {
-                    String idSession = response.body();
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    i.putExtra(Configurations.EXTRA_IDSESSION, idSession);
-                    startActivity(i);
-                }
+
             }
 
             @Override
