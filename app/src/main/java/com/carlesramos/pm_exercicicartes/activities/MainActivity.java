@@ -1,13 +1,16 @@
-package com.carlesramos.pm_exercicicartes;
+package com.carlesramos.pm_exercicicartes.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.carlesramos.pm_exercicicartes.fragments.GameScreenFragment;
+import com.carlesramos.pm_exercicicartes.R;
+import com.carlesramos.pm_exercicicartes.fragments.WelcomeGameScreenFragment;
 import com.carlesramos.pm_exercicicartes.interfaces.IButtonSelected;
 
 public class MainActivity extends AppCompatActivity implements IButtonSelected {
@@ -15,10 +18,13 @@ public class MainActivity extends AppCompatActivity implements IButtonSelected {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-        GameScreenFragment gameScreenFragment = new GameScreenFragment(this);
+        WelcomeGameScreenFragment welcomeGameScreenFragment = new WelcomeGameScreenFragment(this);
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.contenedor, gameScreenFragment)
+        manager.beginTransaction().replace(R.id.contenedor, welcomeGameScreenFragment)
         .commit();
     }
 

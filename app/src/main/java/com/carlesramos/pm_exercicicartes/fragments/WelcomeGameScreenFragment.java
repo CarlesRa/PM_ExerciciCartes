@@ -14,14 +14,14 @@ import androidx.fragment.app.Fragment;
 import com.carlesramos.pm_exercicicartes.R;
 import com.carlesramos.pm_exercicicartes.interfaces.IButtonSelected;
 
-public class GameScreenFragment extends Fragment implements View.OnClickListener {
+public class WelcomeGameScreenFragment extends Fragment implements View.OnClickListener {
 
     private IButtonSelected listener;
     private Button btScores;
     private Button btPlayGame;
     private Button btExit;
 
-    public GameScreenFragment(IButtonSelected listener){
+    public WelcomeGameScreenFragment(IButtonSelected listener){
         this.listener = listener;
     }
     @Nullable

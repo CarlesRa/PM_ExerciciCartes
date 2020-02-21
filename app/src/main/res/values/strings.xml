@@ -13,4 +13,7 @@
     <string name="play_game">PLAY GAME</string>
     <string name="scores">SCORES</string>
     <string name="exit">EXIT</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="passwordfail">Can you create a new account?</string>
 </resources>

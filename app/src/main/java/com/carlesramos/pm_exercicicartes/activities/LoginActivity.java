@@ -1,7 +1,9 @@
 package com.carlesramos.pm_exercicicartes.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.carlesramos.pm_exercicicartes.MainActivity;
 import com.carlesramos.pm_exercicicartes.R;
 import com.carlesramos.pm_exercicicartes.apiclient.APIUtils;
 import com.carlesramos.pm_exercicicartes.configurations.Configurations;
@@ -57,10 +58,28 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
+                //TODO cambiar els colors dels botons del dialog
                 if (response.body().equals(Configurations.LOGIN_FAIL)){
                     Toast.makeText(LoginActivity.this, response.body(), Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginActivity.this, RegistroActivity.class);
-                    startActivity(i);
+                    AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+                    alertDialog.setTitle("Login Fail!");
+                    alertDialog.setMessage(getText(R.string.passwordfail));
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getText(R.string.no),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    etPasswd.setText("");
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getText(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent i = new Intent(LoginActivity.this, RegistroActivity.class);
+                            startActivity(i);
+                        }
+                    });
+
+                    alertDialog.show();
                 }
                 else {
                     String idSession = response.body();
