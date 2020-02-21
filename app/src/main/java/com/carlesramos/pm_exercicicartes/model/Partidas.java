@@ -1,6 +1,8 @@
 package com.carlesramos.pm_exercicicartes.model;
 // Generated 14 feb. 2020 17:54:49 by Hibernate Tools 5.2.12.Final
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 /**
@@ -8,12 +10,19 @@ import java.util.Date;
  */
 public class Partidas implements java.io.Serializable {
 
+	@SerializedName("idPartida")
 	private Integer idPartida;
+	@SerializedName("idSession")
 	private Integer idSession;
+	@SerializedName("jugadorA")
 	private Integer jugadorA;
+	@SerializedName("jugadorB")
 	private Integer jugadorB;
+	@SerializedName("ganador")
 	private Integer ganador;
+	@SerializedName("terminada")
 	private Boolean terminada;
+	@SerializedName("fecha")
 	private Date fecha;
 
 	public Partidas() {
