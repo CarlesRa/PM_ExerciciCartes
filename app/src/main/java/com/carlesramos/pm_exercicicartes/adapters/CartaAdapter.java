@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,28 +47,27 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartasViewHo
         return cartas.size();
     }
 
-    public static class CartasViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class CartasViewHolder extends RecyclerView.ViewHolder implements
+            View.OnClickListener {
 
         private Context context;
         private ICartaSeleccionada listener;
         private ImageView ivCoche;
-        private TextView tvMarca;
-        private TextView tvModelo;
 
-        public CartasViewHolder(@NonNull View itemView, Context context, ICartaSeleccionada listener) {
+        public CartasViewHolder(@NonNull View itemView, Context context,
+                                ICartaSeleccionada listener) {
             super(itemView);
             this.context = context;
             this.listener = listener;
             ivCoche = itemView.findViewById(R.id.ivCoche);
-            tvMarca = itemView.findViewById(R.id.tvMarca);
-            tvModelo = itemView.findViewById(R.id.tvModelo);
             itemView.setOnClickListener(this);
         }
 
 
         public void bindCarta(Cartas carta){
-            String imageName = carta.getModelo().toLowerCase().replaceAll("\\s","");
-            int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+            String imageName = "a" + carta.getIdCarta();
+            int resID = context.getResources().getIdentifier(imageName, "drawable",
+                    context.getPackageName());
 
             if (resID != 0){
                 ivCoche.setImageResource(resID);
@@ -77,9 +75,6 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartasViewHo
             else {
                 //TODO ficar image per defecte
             }
-
-            tvMarca.setText(carta.getMarca());
-            tvModelo.setText(carta.getModelo());
         }
 
         @Override
@@ -88,5 +83,11 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartasViewHo
                 listener.onCartaSeleccionada(getAdapterPosition());
             }
         }
+
+    }
+
+    public void setCartas(ArrayList<Cartas> cartas) {
+        this.cartas = cartas;
+        notifyDataSetChanged();
     }
 }

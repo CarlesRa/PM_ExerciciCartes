@@ -26,12 +26,13 @@ public class MainActivity extends AppCompatActivity implements IButtonSelected {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-        WelcomeGameScreenFragment welcomeGameScreenFragment = new WelcomeGameScreenFragment(this);
+        WelcomeGameScreenFragment welcomeGameScreenFragment =
+                new WelcomeGameScreenFragment(this);
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.contenedor, welcomeGameScreenFragment)
         .commit();
         idSession = getIntent().getStringExtra(Configurations.EXTRA_IDSESSION);
-        idCliente = getIntent().getIntExtra(Configurations.EXTRA_IDCLIENTE,0);
+        idCliente = Integer.valueOf(getIntent().getStringExtra(Configurations.EXTRA_IDCLIENTE));
     }
 
     @Override
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements IButtonSelected {
             case R.id.btPlayGame : {
                 Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show();
                 GameScreenFragment gameScreenFragment = new GameScreenFragment(idSession, idCliente);
+                FragmentManager manager = getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.contenedor, gameScreenFragment).commit();
                 break;
             }
             case R.id.btExit : {

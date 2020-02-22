@@ -8,7 +8,7 @@ public class APIUtils {
 
     }
 
-    public static final String BASE_URL = "http://192.168.105.20:8080";
+    public static final String BASE_URL = "http://192.168.1.111:8080";
     public static IApiInterface getIApiInterface(){
         return ApiRestClient.getInstance().getRetrofit().create(IApiInterface.class);
     }
