@@ -12,11 +12,14 @@ import android.widget.Toast;
 import com.carlesramos.pm_exercicicartes.R;
 import com.carlesramos.pm_exercicicartes.configurations.Configurations;
 import com.carlesramos.pm_exercicicartes.fragments.GameScreenFragment;
+import com.carlesramos.pm_exercicicartes.fragments.RankingCartasFragment;
+import com.carlesramos.pm_exercicicartes.fragments.RankingFragment;
 import com.carlesramos.pm_exercicicartes.fragments.WelcomeGameScreenFragment;
 import com.carlesramos.pm_exercicicartes.interfaces.IButtonSelected;
 
 public class MainActivity extends AppCompatActivity implements IButtonSelected {
 
+    private FragmentManager manager;
     private String idSession;
     private int idCliente;
     @Override
@@ -39,19 +42,25 @@ public class MainActivity extends AppCompatActivity implements IButtonSelected {
     public void onButtonSelected(View v) {
         switch (v.getId()){
             case R.id.btScores : {
-                Toast.makeText(this, "Scores", Toast.LENGTH_SHORT).show();
+                RankingFragment rankingFragment = new RankingFragment();
+                manager = getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.contenedor, rankingFragment)
+                        .addToBackStack(null).commit();
                 break;
             }
             case R.id.btPlayGame : {
 
                 GameScreenFragment gameScreenFragment = new GameScreenFragment(idSession, idCliente);
-                FragmentManager manager = getSupportFragmentManager();
+                manager = getSupportFragmentManager();
                 manager.beginTransaction().replace(R.id.contenedor, gameScreenFragment)
                         .addToBackStack(null).commit();
                 break;
             }
             case R.id.btExit : {
-                Toast.makeText(this, "Exit", Toast.LENGTH_SHORT).show();
+                RankingCartasFragment rankingCartasFragment = new RankingCartasFragment();
+                manager = getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.contenedor,rankingCartasFragment)
+                        .addToBackStack(null).commit();
             }
         }
     }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="values_encryption">
+        <item>3DES</item>
+        <item>AES</item>
+        <item>Blowfish</item>
+        <item>RC5</item>
+        <item>IDEA</item>
+    </string-array>
+    <string-array name="entry_values">
+        <item>3DES</item>
+        <item>AES</item>
+        <item>Blowfish</item>
+        <item>RC5</item>
+        <item>IDEA</item>
+    </string-array>
+</resources>

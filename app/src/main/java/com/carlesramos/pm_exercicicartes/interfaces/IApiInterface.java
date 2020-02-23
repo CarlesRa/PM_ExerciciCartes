@@ -1,8 +1,11 @@
 package com.carlesramos.pm_exercicicartes.interfaces;
 
 import com.carlesramos.pm_exercicicartes.clasesaux.JugadaCpu;
+import com.carlesramos.pm_exercicicartes.model.Cartas;
 import com.carlesramos.pm_exercicicartes.model.Jugadores;
 import com.carlesramos.pm_exercicicartes.clasesaux.NuevaPartida;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -20,7 +23,10 @@ public interface IApiInterface {
     Call<JugadaCpu> juegaCPU();
 
     @GET("ApiJuegoDef/rest/inicio/jugadores")
-    Call<Jugadores> getClasificacion();
+    Call<ArrayList<Jugadores>> getJugadores();
+
+    @GET("ApiJuegoDef/rest/inicio/cartas")
+    Call<ArrayList<Cartas>> getCartas();
 
     @POST("ApiJuegoDef/rest/inicio/comprobarJugada")
     @FormUrlEncoded
