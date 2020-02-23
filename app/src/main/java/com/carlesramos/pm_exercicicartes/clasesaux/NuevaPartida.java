@@ -2,9 +2,10 @@ package com.carlesramos.pm_exercicicartes.clasesaux;
 
 import com.carlesramos.pm_exercicicartes.model.Cartas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class NuevaPartida {
+public class NuevaPartida implements Serializable {
 	private ArrayList<Cartas> cartasCliente;
 	private int idPartida;
 	private int jugadorInicial;

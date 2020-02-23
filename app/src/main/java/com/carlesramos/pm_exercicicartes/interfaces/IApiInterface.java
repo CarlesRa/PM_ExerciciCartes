@@ -1,5 +1,6 @@
 package com.carlesramos.pm_exercicicartes.interfaces;
 
+import com.carlesramos.pm_exercicicartes.clasesaux.JugadaCpu;
 import com.carlesramos.pm_exercicicartes.model.Jugadores;
 import com.carlesramos.pm_exercicicartes.clasesaux.NuevaPartida;
 
@@ -14,6 +15,19 @@ public interface IApiInterface {
 
     @GET("ApiJuegoDef/rest/inicio/nickName")
     Call<String> nickNameExists(@Query("nickName") String nickName);
+
+    @GET("ApiJuegoDef/rest/inicio/juegaCPU")
+    Call<JugadaCpu> juegaCPU();
+
+    @GET("ApiJuegoDef/rest/inicio/jugadores")
+    Call<Jugadores> getClasificacion();
+
+    @POST("ApiJuegoDef/rest/inicio/comprobarJugada")
+    @FormUrlEncoded
+    Call<Integer> comprobarJugada(@Field("idPartida")int idPartida,
+                                  @Field("cartaJugadorA")int cartaJugadorA,
+                                  @Field("caracteristica")String caracteristica,
+                                  @Field("cartaJugadorB")int idCartaB);
 
     @POST("ApiJuegoDef/rest/inicio/nuevaPartida")
     @FormUrlEncoded

@@ -43,10 +43,11 @@ public class MainActivity extends AppCompatActivity implements IButtonSelected {
                 break;
             }
             case R.id.btPlayGame : {
-                Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show();
+
                 GameScreenFragment gameScreenFragment = new GameScreenFragment(idSession, idCliente);
                 FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction().replace(R.id.contenedor, gameScreenFragment).commit();
+                manager.beginTransaction().replace(R.id.contenedor, gameScreenFragment)
+                        .addToBackStack(null).commit();
                 break;
             }
             case R.id.btExit : {

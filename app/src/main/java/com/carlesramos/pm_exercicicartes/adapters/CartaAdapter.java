@@ -5,14 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.carlesramos.pm_exercicicartes.R;
 import com.carlesramos.pm_exercicicartes.interfaces.ICartaSeleccionada;
 import com.carlesramos.pm_exercicicartes.model.Cartas;
-
 import java.util.ArrayList;
 
 public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartasViewHolder> {
@@ -73,7 +70,7 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartasViewHo
                 ivCoche.setImageResource(resID);
             }
             else {
-                //TODO ficar image per defecte
+                //TODO ficar imatge per defecte
             }
         }
 
@@ -84,10 +81,5 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartasViewHo
             }
         }
 
-    }
-
-    public void setCartas(ArrayList<Cartas> cartas) {
-        this.cartas = cartas;
-        notifyDataSetChanged();
     }
 }
