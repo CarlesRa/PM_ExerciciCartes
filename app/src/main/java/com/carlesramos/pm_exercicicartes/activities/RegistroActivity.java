@@ -20,6 +20,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * @author Juan Carlos Rmamos
+ * activity encargada del registro de usuarios.
+ */
 public class RegistroActivity extends AppCompatActivity {
 
     private EditText etNickNameRegistro;
@@ -62,6 +66,10 @@ public class RegistroActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * inserta un jugador en la base de datos a través de la api
+     * @param jugador Recibe un objeto de tipo jugador
+     */
     public void insertarJugador(Jugadores jugador){
         Gson g = new Gson();
         String j = g.toJson(jugador);
@@ -83,6 +91,10 @@ public class RegistroActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Comprueba si existe algun usuario registrado con el mismo nickName
+     * @param  nicName le pasamos el nickName del nuevo jugador a registrar
+     */
     public void nickNameExists(final String nicName){
         mApiInterface.nickNameExists(nicName).enqueue(new Callback<String>() {
             @Override

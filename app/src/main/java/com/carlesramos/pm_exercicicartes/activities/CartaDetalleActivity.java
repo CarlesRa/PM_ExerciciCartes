@@ -1,6 +1,7 @@
 package com.carlesramos.pm_exercicicartes.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
@@ -30,6 +31,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * @author Juan Carlos Ramos
+ */
 public class CartaDetalleActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     private Switch swMotor;
@@ -47,11 +51,12 @@ public class CartaDetalleActivity extends AppCompatActivity implements CompoundB
     private TextView tvVelocidad;
     private TextView tvConsumo;
     private Button btPlayCard;
-    private ImageButton ibVolver;
     private Cartas carta;
     private JugadaCpu jugadaCpu;
     private NuevaPartida partida;
     private IApiInterface apiInterface;
+    private int position;
+    private GameScreenFragment gameScreenFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,7 @@ public class CartaDetalleActivity extends AppCompatActivity implements CompoundB
         carta = (Cartas)i.getSerializableExtra(Configurations.EXTRA_CARTA);
         partida = (NuevaPartida)i.getSerializableExtra(Configurations.EXTRA_PARTIDA);
         jugadaCpu = (JugadaCpu)i.getSerializableExtra(Configurations.EXTRA_CARTA_CPU);
+        position = i.getIntExtra(Configurations.EXTRA_POSITION,0);
 
         swMotor = findViewById(R.id.swMotor);
         swCilindros = findViewById(R.id.swCilindros);
@@ -81,8 +87,8 @@ public class CartaDetalleActivity extends AppCompatActivity implements CompoundB
         tvVelocidad = findViewById(R.id.tvVelocidadGame);
         tvConsumo = findViewById(R.id.tvConsumoGame);
         btPlayCard = findViewById(R.id.btPlayCard);
-        ibVolver = findViewById(R.id.ibVolver);
         apiInterface = APIUtils.getIApiInterface();
+        gameScreenFragment = new GameScreenFragment();
 
         tvMarca.setText(carta.getMarca());
         tvModelo.setText(carta.getModelo());
@@ -92,7 +98,6 @@ public class CartaDetalleActivity extends AppCompatActivity implements CompoundB
         tvRevoluciones.setText(String.valueOf(carta.getRevoluciones()));
         tvVelocidad.setText(String.valueOf(carta.getVelocidad()));
         tvConsumo.setText(String.valueOf(carta.getConsumo()));
-
         swMotor.setOnCheckedChangeListener(this);
         swCilindros.setOnCheckedChangeListener(this);
         swPotencia.setOnCheckedChangeListener(this);
@@ -106,6 +111,11 @@ public class CartaDetalleActivity extends AppCompatActivity implements CompoundB
             public void onClick(View v) {
                 if (swMotor.isChecked() || swConsumo.isChecked() || swCilindros.isChecked() ||
                 swPotencia.isChecked() || swRevoluciones.isChecked() || swVelocidad.isChecked()){
+                    gameScreenFragment.eliminarCarta(position);
+                    /**
+                     * Si recibimos la respuesta.
+                     * Segun esta mostramos un mensaje informando al usuario.
+                     */
                     if (partida.getJugadorInicial() == 1){
                         apiInterface.comprobarJugada(partida.getIdPartida(),
                                 jugadaCpu.getCarta().getIdCarta(),
@@ -114,16 +124,16 @@ public class CartaDetalleActivity extends AppCompatActivity implements CompoundB
                             @Override
                             public void onResponse(Call<Integer> call, Response<Integer> response) {
                                 if (response.isSuccessful()) {
-                                    String aux = response.body().toString();
-                                    if (response.body().equals("1")){
+
+                                    if (response.body() == 1){
                                         Toast.makeText(CartaDetalleActivity.this,
                                                 "Has perdido!!", Toast.LENGTH_SHORT).show();
                                     }
-                                    else if (response.body().equals("2")){
+                                    else if (response.body() == 2){
                                         Toast.makeText(CartaDetalleActivity.this,
                                                 "Has Ganado!!", Toast.LENGTH_SHORT).show();
                                     }
-                                    else {
+                                    else if(response.body() == 0){
                                         Toast.makeText(CartaDetalleActivity.this,
                                                 "Empate!!", Toast.LENGTH_SHORT).show();
                                     }
@@ -141,17 +151,31 @@ public class CartaDetalleActivity extends AppCompatActivity implements CompoundB
                     Toast.makeText(CartaDetalleActivity.this, 
                             "Tienes que indicar una característica!!", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        ibVolver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 finish();
             }
         });
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+    }
+
+    /**
+     * Sirve para dejar seleccionar un solo switch.
+     * @param buttonView
+     * @param isChecked
+     */
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()){

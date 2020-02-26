@@ -23,6 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class DetalleCartaFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
     private Switch swMotor;
@@ -40,22 +41,10 @@ public class DetalleCartaFragment extends Fragment implements CompoundButton.OnC
     private TextView tvVelocidad;
     private TextView tvConsumo;
     private Button btPlayCard;
-    private ImageButton ibVolver;
     private Cartas carta;
     private JugadaCpu jugadaCpu;
     private NuevaPartida partida;
     private IApiInterface apiInterface;
-
-    public DetalleCartaFragment(Cartas carta, NuevaPartida partida, JugadaCpu jugadaCpu){
-        this.carta = carta;
-        this.partida = partida;
-        this.jugadaCpu = jugadaCpu;
-        apiInterface = APIUtils.getIApiInterface();
-    }
-
-    public DetalleCartaFragment(){
-
-    }
 
     @Nullable
     @Override
@@ -101,7 +90,6 @@ public class DetalleCartaFragment extends Fragment implements CompoundButton.OnC
         swConsumo.setOnCheckedChangeListener(this);
 
         btPlayCard.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if (swMotor.isChecked() || swConsumo.isChecked() || swCilindros.isChecked() ||

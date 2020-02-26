@@ -11,18 +11,19 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.carlesramos.pm_exercicicartes.R;
 import com.carlesramos.pm_exercicicartes.apiclient.APIUtils;
-import com.carlesramos.pm_exercicicartes.clasesaux.ValidarLogin;
 import com.carlesramos.pm_exercicicartes.configurations.Configurations;
 import com.carlesramos.pm_exercicicartes.interfaces.IApiInterface;
 import com.google.gson.Gson;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * @author Juan Carlos Ramos
+ * Clase controladora de la pantalla de login.
+ */
 public class LoginActivity extends AppCompatActivity{
 
     private EditText etNombre;
@@ -65,19 +66,25 @@ public class LoginActivity extends AppCompatActivity{
         super.onPause();
     }
 
+    /**
+     * Se encarga de comunicar con la Api para ejecutar el método de comprobación de login.
+     * En caso de no estar registrado nos muestra un diálogo para confirmar si el usuario
+     * quiere registrarse. si pulsa "si" abrirá el activity de registro.
+     */
     public void getResultadoLogin(){
-
 
         mApiInterface.validarLogin(etNombre.getText().toString(),
                 etPasswd.getText().toString()).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                Gson g = new Gson();
-                //TODO cambiar els colors dels botons del dialog
+
                 if (response.isSuccessful()){
+
+                    // Si no se encuentra en la base de datos.
                     if (response.body().equals(Configurations.LOGIN_FAIL)){
                         Toast.makeText(LoginActivity.this, response.body(),
                                 Toast.LENGTH_SHORT).show();
+                        //Creo el diálogo
                         AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this)
                                 .create();
                         alertDialog.setTitle("Login Fail!");
@@ -95,14 +102,17 @@ public class LoginActivity extends AppCompatActivity{
                                     public void onClick(DialogInterface dialog, int which) {
                                         Intent i = new Intent(LoginActivity.this,
                                                 RegistroActivity.class);
-                                        i.putExtra(Configurations.EXTRA_NICKNAME,etNombre.getText().toString());
-                                        i.putExtra(Configurations.EXTRA_PASSWORD,etPasswd.getText().toString());
+                                        i.putExtra(Configurations.EXTRA_NICKNAME,etNombre.getText().
+                                                toString());
+                                        i.putExtra(Configurations.EXTRA_PASSWORD,etPasswd.getText().
+                                                toString());
                                         startActivity(i);
                                     }
                                 });
 
                         alertDialog.show();
                     }
+                    //En el caso que este en la base de datos abro la activity de juego
                     else {
                         String [] datos = response.body().split(" ");
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
@@ -120,7 +130,4 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
     }
-
-
-
 }

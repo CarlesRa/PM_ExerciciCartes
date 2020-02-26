@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btExit"
+        android:id="@+id/btMetaGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/round_button"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btPrefs"
         android:layout_width="75dp"
         android:layout_height="70dp"
         android:background="@drawable/preferencias"
@@ -61,6 +61,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btPlayGame" />
+
+    <Button
+        android:id="@+id/btDeveloperMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:padding="10dp"
+        android:shadowColor="@color/colorAccent"
+        android:text="@string/developermode"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btPrefs"
         app:layout_constraintTop_toBottomOf="@+id/btPlayGame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

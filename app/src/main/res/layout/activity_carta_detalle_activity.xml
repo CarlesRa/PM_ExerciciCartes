@@ -256,15 +256,4 @@
         app:layout_constraintStart_toEndOf="@+id/tvConsumoGame"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-    <ImageButton
-        android:id="@+id/ibVolver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/comback"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/btPlayCard" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

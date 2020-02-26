@@ -12,11 +12,17 @@ public class JugadaCpu implements Serializable {
 	private Cartas carta;
 	@SerializedName("caracteristica")
 	private String caracteristica;
+	@SerializedName("ganadasCPU")
+	private int ganadasCPU;
+	@SerializedName("ganadasPlayer")
+	private int ganadasPlayer;
 	
-	public JugadaCpu(Cartas carta, String caracteristica) {
+	public JugadaCpu(Cartas carta, String caracteristica, int ganadasCPU, int ganadasPlayer) {
 		super();
 		this.carta = carta;
 		this.caracteristica = caracteristica;
+		this.ganadasCPU = ganadasCPU;
+		this.ganadasPlayer = ganadasPlayer;
 	}
 
 	public Cartas getCarta() {
@@ -34,6 +40,12 @@ public class JugadaCpu implements Serializable {
 	public void setCaracteristica(String caracteristica) {
 		this.caracteristica = caracteristica;
 	}
-	
-	
+
+	public int getGanadasCPU() {
+		return ganadasCPU;
+	}
+
+	public int getGanadasPlayer() {
+		return ganadasPlayer;
+	}
 }

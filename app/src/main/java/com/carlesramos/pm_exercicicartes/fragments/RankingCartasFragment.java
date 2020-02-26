@@ -26,6 +26,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * @author Juan Carlos Ramos
+ * Clase controladora de la pantalla de Ranking de cartas.
+ */
 public class RankingCartasFragment extends Fragment {
 
     private ArrayList<Cartas> cartas;
@@ -42,9 +46,17 @@ public class RankingCartasFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         rvCartas = getActivity().findViewById(R.id.rvCartasRanking);
         mApiInterface = APIUtils.getIApiInterface();
+        /**
+         * Llamo al servidor para que me de la lista de cartas ordenada según el número de rondas
+         * ganadas.
+         */
         mApiInterface.getCartas().enqueue(new Callback<ArrayList<Cartas>>() {
             @Override
             public void onResponse(Call<ArrayList<Cartas>> call, Response<ArrayList<Cartas>> response) {
+                /**
+                 * En caso de respuesta correcta
+                 * Relleno el recyclerview.
+                 */
                 if (response.isSuccessful()){
                     cartas = response.body();
                     DividerItemDecoration dividerItemDecoration =

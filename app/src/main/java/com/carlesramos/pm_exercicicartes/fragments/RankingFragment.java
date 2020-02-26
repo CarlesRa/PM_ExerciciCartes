@@ -20,6 +20,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * @author Juan Carlos Ramos
+ * Clase controladora de la pantalla de Ranking de jugadores.
+ */
 public class RankingFragment extends Fragment {
 
     private RecyclerView rvRanking;
