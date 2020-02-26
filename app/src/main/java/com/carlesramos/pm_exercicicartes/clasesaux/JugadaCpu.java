@@ -6,6 +6,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * @author Juan Carlos Ramos
+ * Clase auxiliar para facilitar el transcurso del juego
+ */
 public class JugadaCpu implements Serializable {
 
 	@SerializedName("carta")

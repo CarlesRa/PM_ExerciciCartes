@@ -4,7 +4,10 @@ import com.carlesramos.pm_exercicicartes.model.Cartas;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+/**
+ * @author Juan Carlos Ramos
+ * Clase auxiliar para facilitar el transcurso del juego
+ */
 public class NuevaPartida implements Serializable {
 	private ArrayList<Cartas> cartasCliente;
 	private int idPartida;

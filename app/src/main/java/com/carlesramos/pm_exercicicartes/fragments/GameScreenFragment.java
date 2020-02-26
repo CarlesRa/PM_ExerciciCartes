@@ -22,6 +22,7 @@ import com.carlesramos.pm_exercicicartes.apiclient.APIUtils;
 import com.carlesramos.pm_exercicicartes.clasesaux.JugadaCpu;
 import com.carlesramos.pm_exercicicartes.configurations.Configurations;
 import com.carlesramos.pm_exercicicartes.interfaces.IApiInterface;
+import com.carlesramos.pm_exercicicartes.interfaces.IButtonSelected;
 import com.carlesramos.pm_exercicicartes.interfaces.ICartaSeleccionada;
 import com.carlesramos.pm_exercicicartes.clasesaux.NuevaPartida;
 import com.carlesramos.pm_exercicicartes.model.Cartas;
@@ -36,7 +37,7 @@ import retrofit2.Response;
  * @author Juan Carlos Ramos
  * Clase controladora de la pantalla de juego
  */
-public class GameScreenFragment extends Fragment implements ICartaSeleccionada {
+public class GameScreenFragment extends Fragment implements ICartaSeleccionada, IButtonSelected {
 
     private TextView tvCaracteristica;
     private TextView tvRonda;
@@ -54,6 +55,8 @@ public class GameScreenFragment extends Fragment implements ICartaSeleccionada {
     private int rondaAux;
     private int ganadasPlayer;
     private int ganadasCPU;
+    private boolean seguirJugando;
+    private IButtonSelected listener;
 
     public GameScreenFragment(String idSession, int idCliente){
         mApiInterface = APIUtils.getIApiInterface();
@@ -82,7 +85,9 @@ public class GameScreenFragment extends Fragment implements ICartaSeleccionada {
         rvCartasJugador = getActivity().findViewById(R.id.rvCartasJugador);
         tvDificult = getActivity().findViewById(R.id.tvDificult);
         ronda = 1;
+        rondaAux = 0;
         tvRonda.setText(String.valueOf(ronda));
+        seguirJugando = false;
         nuevaPartida();
     }
 
@@ -91,6 +96,7 @@ public class GameScreenFragment extends Fragment implements ICartaSeleccionada {
         super.onResume();
 
         setDificultad();
+        //Remedi roin per fer que jugue el joc era per poder mostrar-te que juga.
         if (cartas != null){
             CartaAdapter adapter = new CartaAdapter(cartas,
                     getActivity(),GameScreenFragment.this);
@@ -98,16 +104,15 @@ public class GameScreenFragment extends Fragment implements ICartaSeleccionada {
             rvCartasJugador.setAdapter(adapter);
             rvCartasJugador.setLayoutManager(new LinearLayoutManager(getActivity() ,
                     LinearLayoutManager.HORIZONTAL,false));
-            if (ronda > rondaAux){
+            if (ronda > rondaAux) {
                 rondaAux = ronda;
                 ronda++;
-                if (ronda <= 6){
+                tvRonda.setText(String.valueOf(ronda));
+                if (ronda <= 6) {
                     juegaCpu();
-                }
-                else {
+                } else {
                     finalizarPartida();
                 }
-                tvRonda.setText(String.valueOf(ronda));
             }
         }
     }
@@ -172,7 +177,6 @@ public class GameScreenFragment extends Fragment implements ICartaSeleccionada {
             @Override
             public void onResponse(Call<JugadaCpu> call, Response<JugadaCpu> response) {
                 if (response.isSuccessful()){
-
                     jugadaCpu = response.body();
                     tvCaracteristica.setText(jugadaCpu.getCaracteristica());
                     tvGanadasCPU.setText(String.valueOf(jugadaCpu.getGanadasCPU()));
@@ -208,17 +212,14 @@ public class GameScreenFragment extends Fragment implements ICartaSeleccionada {
                         Toast.makeText(getActivity(), "OOOOO has perdido la partida.....", Toast.LENGTH_SHORT).show();
                         int rondasGanadas = Integer.parseInt(tvGanadasCPU.getText().toString()) + 1;
                         tvGanadasCPU.setText(String.valueOf(rondasGanadas));
-                        ronda = 0;
                     }
                     else if (response.body() == 2){
                         Toast.makeText(getActivity(), "ENHORABUENA has ganado!!!!", Toast.LENGTH_SHORT).show();
                         int rondasGanadas = Integer.parseInt(tvGanadasPlayer.getText().toString()) + 1;
                         tvGanadasPlayer.setText(String.valueOf(rondasGanadas));
-                        ronda = 0;
                     }
                     else {
                         Toast.makeText(getActivity(), "Has empatado la partida....", Toast.LENGTH_SHORT).show();
-                        ronda = 0;
                     }
                 }
             }
@@ -228,6 +229,12 @@ public class GameScreenFragment extends Fragment implements ICartaSeleccionada {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        ronda = 0;
+        ronda = 1;
+        rondaAux = 0;
+    }
+
+    @Override
+    public void onButtonSelected(View v) {
+
     }
 }

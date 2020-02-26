@@ -23,6 +23,7 @@ import com.carlesramos.pm_exercicicartes.clasesaux.NuevaPartida;
 import com.carlesramos.pm_exercicicartes.configurations.Configurations;
 import com.carlesramos.pm_exercicicartes.fragments.GameScreenFragment;
 import com.carlesramos.pm_exercicicartes.interfaces.IApiInterface;
+import com.carlesramos.pm_exercicicartes.interfaces.IButtonSelected;
 import com.carlesramos.pm_exercicicartes.model.Cartas;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import retrofit2.Response;
 /**
  * @author Juan Carlos Ramos
  */
-public class CartaDetalleActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class CartaDetalleActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
 
     private Switch swMotor;
     private Switch swCilindros;

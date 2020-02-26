@@ -1,5 +1,8 @@
 package com.carlesramos.pm_exercicicartes.clasesaux;
-
+/**
+ * @author Juan Carlos Ramos
+ * Clase auxiliar para facilitar el transcurso del juego
+ */
 public class ValidarLogin {
 	
 	private String idSession;
